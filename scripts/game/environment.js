@@ -4,6 +4,7 @@ class Environment {
         this.map = map;
         this.camera = camera;
         this.controls = controls;
+        
         this.map.addObject(controls.getObject());
         
         this.ray = new THREE.Raycaster();
@@ -29,9 +30,9 @@ class Environment {
     animate() {
         requestAnimationFrame(env.animate);
 
-        controls.isOnObject(false);
+        player.controls.isOnObject(false);
 
-        env.ray.ray.origin.copy(controls.getObject().position);
+        env.ray.ray.origin.copy(player.controls.getObject().position);
         env.ray.ray.origin.y -= 10;
 
         var intersections = env.ray.intersectObjects(map.objects);
@@ -42,14 +43,16 @@ class Environment {
 
             if (distance > 0 && distance < 10) {
 
-                controls.isOnObject(true);
+                player.controls.isOnObject(true);
             }
         }
 
-        controls.update(Date.now() - time);
+        player.controls.update(Date.now() - time);
 
         env.renderer.render(map.scene, env.camera);
 
         time = Date.now();
+
+        player.handleHUDMovement(velocity.x, velocity.y, velocity.z);
     }
 }

@@ -23,7 +23,7 @@ THREE.PointerLockControls = function ( camera ) {
 	var isOnObject = false;
 	var canJump = false;
 
-	var velocity = new THREE.Vector3();
+	velocity = new THREE.Vector3();
 
 	var PI_2 = Math.PI / 2;
 
@@ -38,7 +38,7 @@ THREE.PointerLockControls = function ( camera ) {
 		pitchObject.rotation.x -= movementY * 0.002;
 
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
-
+        // player.handleMouseMovement(movementX, movementY);
 	};
 
 	var onKeyDown = function ( event ) {

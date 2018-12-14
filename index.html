@@ -60,13 +60,15 @@
 </head>
 
 <body>
-    <script src="scripts/misc/three.js"></script>
-    <script src="scripts/misc/PointerLockControls.js"></script>
-    <script src="scripts/game/environment.js"></script>
-    <script src="scripts/game/map.js"></script>
-    <script src="scripts/misc/misc.js"></script>
+    <script type="text/javascript" src="scripts/misc/three.js"></script>
+    <script type="text/javascript" src="scripts/misc/PointerLockControls.js"></script>
     <script type="text/javascript" src="scripts/misc/MTLLoader.js"></script>
     <script type="text/javascript" src="scripts/misc/OBJLoader.js"></script>
+    <script type="text/javascript" src="scripts/misc/misc.js"></script>
+    
+    <script type="text/javascript" src="scripts/game/environment.js"></script>
+    <script type="text/javascript" src="scripts/game/map.js"></script>
+    <script type="text/javascript" src="scripts/game/player.js"></script>
 
     <div id="blocker">
 
@@ -80,27 +82,14 @@
 
     <script>
         var camera;
-        var controls, time = Date.now();
-        var peestol;
+        var time = Date.now();
 
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-        controls = new THREE.PointerLockControls(camera);
+        var player = new Player();
 
-        checkPointerLock(controls);
+        checkPointerLock(player.controls);
 
         var map = new Map();
-        var env = new Environment(camera, controls, map);
-        var loader = new THREE.OBJLoader();
-        loader.load('resources/flat_pistle.obj', function (geometry) {
-            peestol = geometry;
-            
-            map.scene.add(geometry);
-            env.camera.add(geometry);
-            geometry.position.x = 4;
-            geometry.position.y = -2;
-            geometry.position.z = -4;
-        });
-
+        var env = new Environment(player.camera, player.controls, map);
         env.animate();
     </script>
 </body>
