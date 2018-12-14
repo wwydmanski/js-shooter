@@ -1,66 +1,54 @@
 class Environment {
-    constructor(camera, controls) {
+    constructor(camera, controls, map) {
+        
+        this.map = map;
         this.camera = camera;
         this.controls = controls;
-
-        this.scene = new THREE.Scene();
-        this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
-
-        this.lights = this.createLights();
-        this.lights.forEach(light => {
-            this.scene.add(light);
-        });
-
+        
         this.ray = new THREE.Raycaster();
         this.ray.ray.direction.set(0, -1, 0);
-
-        this.floor = this.createFloor();
-        this.scene.add(this.floor);
-
+        
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor(0xffffff);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        window.onresize = this.onWindowResize;
+        
+        document.body.appendChild(this.renderer.domElement);
+        console.info("Environment created");
     }
 
-    createLights() {
-        var light1 = new THREE.DirectionalLight(0xffffff, 1.5);
-        light1.position.set(1, 1, 1);
+    onWindowResize() {
+        env.camera.aspect = window.innerWidth / window.innerHeight;
+        env.camera.updateProjectionMatrix();
 
-        var light2 = new THREE.DirectionalLight(0xffffff, 0.75);
-        light2.position.set(-1, - 0.5, -1);
-
-        return [light1, light2];
+        env.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    createFloor() {
-        geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-        geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+    animate() {
+        requestAnimationFrame(env.animate);
 
-        for (var i = 0, l = geometry.vertices.length; i < l; i++) {
+        controls.isOnObject(false);
 
-            var vertex = geometry.vertices[i];
-            vertex.x += Math.random() * 20 - 10;
-            vertex.y += Math.random() * 2;
-            vertex.z += Math.random() * 20 - 10;
+        env.ray.ray.origin.copy(controls.getObject().position);
+        env.ray.ray.origin.y -= 10;
 
+        var intersections = env.ray.intersectObjects(map.objects);
+
+        if (intersections.length > 0) {
+
+            var distance = intersections[0].distance;
+
+            if (distance > 0 && distance < 10) {
+
+                controls.isOnObject(true);
+            }
         }
 
-        for (var i = 0, l = geometry.faces.length; i < l; i++) {
+        controls.update(Date.now() - time);
 
-            var face = geometry.faces[i];
-            face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-            face.vertexColors[1] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-            face.vertexColors[2] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+        env.renderer.render(map.scene, env.camera);
 
-        }
-
-        material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
-
-        mesh = new THREE.Mesh(geometry, material);
-        return mesh;
-    }
-
-    addObject(object){
-        this.scene.add(object);
+        time = Date.now();
     }
 }
