@@ -38,7 +38,7 @@ THREE.PointerLockControls = function ( camera ) {
 		pitchObject.rotation.x -= movementY * 0.002;
 
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
-        // player.handleMouseMovement(movementX, movementY);
+        // player.handleMouseRotation(movementX, movementY);
 	};
 
 	var onKeyDown = function ( event ) {
