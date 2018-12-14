@@ -4,6 +4,7 @@ class Environment {
         this.map = map;
         this.camera = camera;
         this.controls = controls;
+        this.map.addObject(controls.getObject());
         
         this.ray = new THREE.Raycaster();
         this.ray.ray.direction.set(0, -1, 0);

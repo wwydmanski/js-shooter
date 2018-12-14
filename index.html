@@ -65,7 +65,9 @@
     <script src="environment.js"></script>
     <script src="map.js"></script>
     <script src="misc.js"></script>
-
+    <script type="text/javascript" src="MTLLoader.js"></script>
+    <script type="text/javascript" src="OBJLoader.js"></script>
+    <script type="text/javascript" src="jquery-1.9.0.js"></script>
 
     <div id="blocker">
 
@@ -80,6 +82,8 @@
     <script>
         var camera;
         var controls, time = Date.now();
+        var peestol;
+
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
         controls = new THREE.PointerLockControls(camera);
 
@@ -87,7 +91,16 @@
 
         var map = new Map();
         var env = new Environment(camera, controls, map);
-        map.addObject(controls.getObject());
+        var loader = new THREE.OBJLoader();
+        loader.load('resources/flat_pistle.obj', function (geometry) {
+            peestol = geometry;
+            
+            map.scene.add(geometry);
+            env.camera.add(geometry);
+            geometry.position.x = 4;
+            geometry.position.y = -2;
+            geometry.position.z = -4;
+        });
 
         env.animate();
     </script>
