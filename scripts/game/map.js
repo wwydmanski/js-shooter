@@ -1,6 +1,8 @@
 class Map {
     constructor() {
-        this.scene = new THREE.Scene();
+        this.scene = new Physijs.Scene;
+        this.scene.setGravity(new THREE.Vector3(0, -50, 0));
+
         this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
 
         this.floor = this.createFloor();
@@ -52,7 +54,7 @@ class Map {
 
         var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
 
-        var mesh = new THREE.Mesh(geometry, material);
+        var mesh = new Physijs.BoxMesh(geometry, Physijs.createMaterial(material), 0);
         return mesh;
     }
 
@@ -73,15 +75,14 @@ class Map {
 
         for (var i = 0; i < 500; i++) {
 
-            var material = new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors });
+            var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors }));
 
-            var mesh = new THREE.Mesh(geometry, material);
+            var mesh = new Physijs.BoxMesh(geometry, material, 0);
             mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
             mesh.position.y = Math.floor(Math.random() * 20) * 20 + 10;
             mesh.position.z = Math.floor(Math.random() * 20 - 10) * 20;
 
             material.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-
             objects.push(mesh);
         }
 

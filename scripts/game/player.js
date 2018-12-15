@@ -8,7 +8,6 @@ class Player {
         this.gunMaxOffset.x = [2, 6];
         this.gunMaxOffset.y = [-4, 0];
 
-
         this.delta = 1.0;
         
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
@@ -16,7 +15,10 @@ class Player {
 
         this.loadGun();
 
+        this.debug = 0;
+
         document.addEventListener('click', this.shoot, true);
+        console.info("Player loaded");
     }
 
     loadGun() {
@@ -33,7 +35,6 @@ class Player {
     }
 
     handleHUDMovement(velX, velY, velZ) {
-        
         player.gun.position.x = Math.min(Math.max(4-player.gunVelocity.x, player.gunMaxOffset.x[0]), player.gunMaxOffset.x[1]);
         player.gun.position.y = Math.min(Math.max(-2+player.gunVelocity.y, player.gunMaxOffset.y[0]), player.gunMaxOffset.y[1]);
 
@@ -46,7 +47,10 @@ class Player {
     }
 
     shoot() {
-        console.log("BOOOM");
+        var ball = player.makeBall();
+        map.addObject(ball);
+
+        ball.applyCentralImpulse( new THREE.Vector3(-700*Math.sin(player.controls.getObject().rotation.y), 0, -700*Math.cos(player.controls.getObject().rotation.y)));
     }
 
     handleMouseRotation(movX, movY) {
@@ -63,5 +67,42 @@ class Player {
             player.gunVelocity.x = 0;
         if (Math.abs(player.gunVelocity.y) <= speedDecay)
             player.gunVelocity.y = 0;
+    }
+
+    makeBall() {
+        var rectangle = new Physijs.SphereMesh(
+            new THREE.SphereGeometry(
+                Math.random() * (4 - 1) + 1,
+                16,
+                16
+            ),
+            Physijs.createMaterial(
+                new THREE.MeshLambertMaterial({
+                    reflectivity: .8,
+                    map: THREE.ImageUtils.loadTexture('plywood.jpg')
+                }),
+                .9,
+                .1
+            ),
+            1
+        );
+
+        var r = {
+            x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
+            y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
+            z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
+        };
+        
+        // var pos = player.controls.getObject().position;
+        var pos = player.gun.localToWorld(new THREE.Vector3());
+        rectangle.rotation.set(r.x, r.y, r.z);
+        rectangle.position.x = pos.x;
+        rectangle.position.y = pos.y;
+        rectangle.position.z = pos.z;
+
+        rectangle.castShadow = true;
+        rectangle.receiveShadow = true;
+
+        return rectangle;
     }
 }

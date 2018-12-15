@@ -49,10 +49,10 @@ class Environment {
 
         player.controls.update(Date.now() - time);
 
-        env.renderer.render(map.scene, env.camera);
-
-        time = Date.now();
-
         player.handleHUDMovement(velocity.x, velocity.y, velocity.z);
+
+        env.renderer.render(map.scene, env.camera);
+        map.scene.simulate();
+        time = Date.now();
     }
 }

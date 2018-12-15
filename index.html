@@ -65,6 +65,8 @@
     <script type="text/javascript" src="scripts/misc/MTLLoader.js"></script>
     <script type="text/javascript" src="scripts/misc/OBJLoader.js"></script>
     <script type="text/javascript" src="scripts/misc/misc.js"></script>
+    <script type="text/javascript" src="scripts/misc/physi.js"></script>
+
     
     <script type="text/javascript" src="scripts/game/environment.js"></script>
     <script type="text/javascript" src="scripts/game/map.js"></script>
@@ -81,16 +83,20 @@
     </div>
 
     <script>
+        Physijs.scripts.worker = 'physijs_worker.js';
+        Physijs.scripts.ammo = 'ammo.js';
+
         var camera;
         var time = Date.now();
 
+        var map = new Map();
         var player = new Player();
-
+        
         checkPointerLock(player.controls);
 
-        var map = new Map();
         var env = new Environment(player.camera, player.controls, map);
         env.animate();
+        map.scene.simulate();
     </script>
 </body>
 
