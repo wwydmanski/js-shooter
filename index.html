@@ -60,16 +60,17 @@
 </head>
 
 <body>
-    <script type="text/javascript" src="scripts/misc/three.js"></script>
-    <script type="text/javascript" src="scripts/misc/PointerLockControls.js"></script>
-    <script type="text/javascript" src="scripts/misc/MTLLoader.js"></script>
-    <script type="text/javascript" src="scripts/misc/OBJLoader.js"></script>
-    <script type="text/javascript" src="scripts/misc/misc.js"></script>
-    <script type="text/javascript" src="scripts/misc/physi.js"></script>
+    <script type="text/javascript" src="scripts/system/three.js"></script>
+    <script type="text/javascript" src="scripts/system/PointerLockControls.js"></script>
+    <script type="text/javascript" src="scripts/system/MTLLoader.js"></script>
+    <script type="text/javascript" src="scripts/system/OBJLoader.js"></script>
+    <script type="text/javascript" src="scripts/system/misc.js"></script>
+    <script type="text/javascript" src="scripts/system/physi.js"></script>
 
     
     <script type="text/javascript" src="scripts/game/environment.js"></script>
     <script type="text/javascript" src="scripts/game/map.js"></script>
+    <script type="text/javascript" src="scripts/game/default_map.js"></script>
     <script type="text/javascript" src="scripts/game/player.js"></script>
     <script type="text/javascript" src="scripts/game/gun_physics.js"></script>
     <script type="text/javascript" src="scripts/game/gun.js"></script>
@@ -88,15 +89,14 @@
     <script>
         Physijs.scripts.worker = 'physijs_worker.js';
         Physijs.scripts.ammo = 'ammo.js';
+        var noclip = true;
 
         var camera;
         var time = Date.now();
 
-        var map = new Map();
+        var map = new DefaultMap();
         var player = new Player();
 
-        var loader_geometry = null;
-        
         checkPointerLock(player.controls);
 
         var env = new Environment(player.camera, player.controls, map);
