@@ -21,15 +21,6 @@ class GunPhysics {
         this.rotation.y = 0;
         this.rotation.z = 0;
 
-        this.decaySpeed = () => {
-            this.gunVelocity.x -= speedDecay * Math.sign(this.gunVelocity.x);
-            this.gunVelocity.y -= speedDecay * Math.sign(this.gunVelocity.y);
-            if (Math.abs(this.gunVelocity.x) <= speedDecay)
-                this.gunVelocity.x = 0;
-            if (Math.abs(this.gunVelocity.y) <= speedDecay)
-                this.gunVelocity.y = 0;
-        }
-
         this.handleMouseRotation = (movX, movY) => {
             if (movX != 0 && !this.gunMaxOffset.x.includes(this.position.x))
                 this.gunVelocity.x += speedAddition * movX * 0.01;
@@ -46,10 +37,8 @@ class GunPhysics {
             if (velY != 0 && !this.gunMaxOffset.y.includes(this.position.y))
                 this.gunVelocity.y -= speedAddition * velY * 0.1;
 
-            this.decaySpeed();
             this.update();
         }
-
     }
 
     update() {
@@ -86,5 +75,8 @@ class GunPhysics {
     _updateVelocity() {
         this.rotationVelocity.x -= this.rotationVelocity.x * 0.08 + 0.02;
         this.rotationVelocity.z -= this.rotationVelocity.z * 0.08
+
+        this.gunVelocity.x -= this.gunVelocity.x * 0.08;
+        this.gunVelocity.y -= this.gunVelocity.y * 0.08;
     }
 }
