@@ -39,7 +39,7 @@ class Gun {
             var pos = this.localToWorld(new THREE.Vector3());
             rectangle.rotation.set(r.x, r.y, r.z);
             rectangle.position.x = pos.x;
-            rectangle.position.y = pos.y;
+            rectangle.position.y = pos.y+1;
             rectangle.position.z = pos.z;
     
             rectangle.castShadow = true;
@@ -52,11 +52,12 @@ class Gun {
             var ball = this.craftBullet();
             map.addObject(ball);
 
-            var imp_x = -700 * Math.sin(this.controls.getObject().rotation.y);
-            var imp_y = 700 * Math.sin(this.controls.getPitchObject().rotation.x + this.rotation.x);
-            var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y);
+            var imp_y = 700 * Math.sin((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            var imp_x = -700 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             ball.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
 
+            console.log(imp_y);
             this.physics.applyRotationForce(2, 0, 0);
         }
 

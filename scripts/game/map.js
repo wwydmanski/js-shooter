@@ -1,6 +1,6 @@
 class Map {
     constructor() {
-        this.scene = new Physijs.Scene;
+        this.scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });;
         this.scene.setGravity(new THREE.Vector3(0, -50, 0));
 
         this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
