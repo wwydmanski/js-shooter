@@ -85,7 +85,7 @@ class GunPhysics {
         this.rotation.x += this.rotationVelocity.x * 0.115;
         this.rotation.z += this.rotationVelocity.z * 0.115;
 
-        this.rotation.x = Math.max(Math.min(this.rotation.x, 3.14 / 2), 0);
+        this.rotation.x = Math.max(Math.min(this.rotation.x, Math.PI/2), 0);
     }
 
     _updateVelocity() {

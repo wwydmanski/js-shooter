@@ -57,7 +57,6 @@ class Gun {
             var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             ball.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
 
-            console.log(imp_y);
             this.physics.applyRotationForce(2, 0, 0);
         }
 
