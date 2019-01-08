@@ -30,14 +30,7 @@ class Gun {
                 1
             );
     
-            var r = {
-                x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-                y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-                z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
-            };
-    
             var pos = this.localToWorld(new THREE.Vector3());
-            rectangle.rotation.set(r.x, r.y, r.z);
             rectangle.position.x = pos.x;
             rectangle.position.y = pos.y+1;
             rectangle.position.z = pos.z;
@@ -49,22 +42,22 @@ class Gun {
         }
 
         this.shoot = () => {
-            var ball = this.craftBullet();
-            map.addObject(ball);
+            var bullet = this.craftBullet();
+            map.addObject(bullet);
 
             var imp_y = 700 * Math.sin((this.controls.getPitchObject().rotation.x + this.rotation.x));
             var imp_x = -700 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
-            ball.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
+            bullet.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
 
-            if(this.physics.sighted)
+            if(this.physics.ironsights)
                 this.physics.applyRotationForce(1, 0, 0);
             else
                 this.physics.applyRotationForce(2, 0, 0);
         }
 
-        this.ironshights = () =>{
-            this.physics.switchIronsight();
+        this.toggleIronsights = () =>{
+            this.physics.toggleIronsights();
         }
 
         this.physics = new GunPhysics(this);
@@ -72,7 +65,7 @@ class Gun {
             if(event.button==0)
                 this.shoot();
             else if(event.button==2)
-                this.ironshights();
+                this.toggleIronsights();
         }, true);
 
         console.info("Gun loaded");
