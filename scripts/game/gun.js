@@ -63,7 +63,7 @@ class Gun {
             var pos = this.localToWorld(new THREE.Vector3());
 
             var imp_x = -700 * Math.sin(player.controls.getObject().rotation.y);
-            var imp_y = 700 * Math.sin(this.physics.rotation.x);
+            var imp_y = 700 * Math.sin(player.controls.getPitchObject().rotation.x + this.physics.rotation.x);
             var imp_z = -700 * Math.cos(player.controls.getObject().rotation.y);
             ball.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
         }
