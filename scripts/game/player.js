@@ -13,7 +13,7 @@ class Player {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
         this.controls = new THREE.PointerLockControls(this.camera);
 
-        this.loadGun();
+        this.gun = new Gun(this.camera);
 
         this.debug = 0;
 
@@ -21,17 +21,8 @@ class Player {
         console.info("Player loaded");
     }
 
-    loadGun() {
-        var loader = new THREE.OBJLoader();
-        loader.load('resources/flat_pistle.obj', function (geometry) {
-            map.scene.add(geometry);
-            player.camera.add(geometry);
-            geometry.position.x = 4;
-            geometry.position.y = -2;
-            geometry.position.z = -4;
-
-            player.gun = geometry;
-        });
+    gun_load_handler(geometry){
+        this.gun.subhandler(geometry);
     }
 
     handleHUDMovement(velX, velY, velZ) {
@@ -50,7 +41,12 @@ class Player {
         var ball = player.makeBall();
         map.addObject(ball);
 
-        ball.applyCentralImpulse( new THREE.Vector3(-700*Math.sin(player.controls.getObject().rotation.y), 0, -700*Math.cos(player.controls.getObject().rotation.y)));
+        var pos = player.gun.localToWorld(new THREE.Vector3());
+
+        var imp_x = -700*Math.sin(player.controls.getObject().rotation.y);
+        var imp_y = pos.rotation.y;
+        var imp_z = -700*Math.cos(player.controls.getObject().rotation.y);
+        ball.applyCentralImpulse( new THREE.Vector3(imp_x, imp_y, imp_z));
     }
 
     handleMouseRotation(movX, movY) {

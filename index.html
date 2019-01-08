@@ -71,6 +71,9 @@
     <script type="text/javascript" src="scripts/game/environment.js"></script>
     <script type="text/javascript" src="scripts/game/map.js"></script>
     <script type="text/javascript" src="scripts/game/player.js"></script>
+    <script type="text/javascript" src="scripts/game/gun_physics.js"></script>
+    <script type="text/javascript" src="scripts/game/gun.js"></script>
+
 
     <div id="blocker">
 
@@ -91,6 +94,8 @@
 
         var map = new Map();
         var player = new Player();
+
+        var loader_geometry = null;
         
         checkPointerLock(player.controls);
 
