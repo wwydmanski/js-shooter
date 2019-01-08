@@ -1,6 +1,7 @@
 class Gun {
-    constructor(camera) {
+    constructor(camera, controls) {
         this.camera = camera;
+        this.controls = controls;
 
         this.handler = (geometry) => {
             map.scene.add(geometry);
@@ -19,10 +20,10 @@ class Gun {
 
         this.loadGun();
 
-        this.makeBall = () => {
+        this.craftBullet = () => {
             var rectangle = new Physijs.SphereMesh(
                 new THREE.SphereGeometry(
-                    Math.random() * (4 - 1) + 1,
+                    0.2,
                     16,
                     16
                 ),
@@ -32,7 +33,7 @@ class Gun {
                         map: THREE.ImageUtils.loadTexture('plywood.jpg')
                     }),
                     .9,
-                    .1
+                    0
                 ),
                 1
             );
@@ -43,8 +44,7 @@ class Gun {
                 z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
             };
     
-            // var pos = player.controls.getObject().position;
-            var pos = player.gun.localToWorld(new THREE.Vector3());
+            var pos = this.localToWorld(new THREE.Vector3());
             rectangle.rotation.set(r.x, r.y, r.z);
             rectangle.position.x = pos.x;
             rectangle.position.y = pos.y;
@@ -57,15 +57,15 @@ class Gun {
         }
 
         this.shoot = () => {
-            var ball = this.makeBall();
+            var ball = this.craftBullet();
             map.addObject(ball);
 
-            var pos = this.localToWorld(new THREE.Vector3());
-
-            var imp_x = -700 * Math.sin(player.controls.getObject().rotation.y);
-            var imp_y = 700 * Math.sin(player.controls.getPitchObject().rotation.x + this.physics.rotation.x);
-            var imp_z = -700 * Math.cos(player.controls.getObject().rotation.y);
+            var imp_x = -700 * Math.sin(this.controls.getObject().rotation.y);
+            var imp_y = 700 * Math.sin(this.controls.getPitchObject().rotation.x + this.rotation.x);
+            var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y);
             ball.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
+
+            this.physics.applyRotationForce(2, 0, 0);
         }
 
         this.physics = new GunPhysics(this);
