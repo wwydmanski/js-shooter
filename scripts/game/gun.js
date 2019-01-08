@@ -5,17 +5,9 @@ class Gun {
 
         this.handler = (geometry) => {
             map.scene.add(geometry);
-            geometry.position.x = 4;
-            geometry.position.y = -2;
-            geometry.position.z = -4;
-            loader_geometry = geometry;
-
-            this.__proto__ = loader_geometry;
-
-            this.geometry = loader_geometry;
-
+            this.__proto__ = geometry;
+            this.geometry = geometry;
             this.camera.add(this.geometry);
-
         };
 
         this.loadGun();
@@ -68,8 +60,17 @@ class Gun {
             this.physics.applyRotationForce(2, 0, 0);
         }
 
+        this.ironshights = () =>{
+            this.physics.switchIronsight();
+        }
+
         this.physics = new GunPhysics(this);
-        document.addEventListener('click', this.shoot, true);
+        document.addEventListener('click', (event) => {
+            if(event.button==0)
+                this.shoot();
+            else if(event.button==2)
+                this.ironshights();
+        }, true);
 
         console.info("Gun loaded");
     }

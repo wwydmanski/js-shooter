@@ -9,12 +9,26 @@ class GunPhysics {
         this.gunMaxOffset.x = [2, 6];
         this.gunMaxOffset.y = [-4, 0];
 
+        this.alternative_offset = new THREE.Vector3();
+        this.alternative_offset.x = [-1, 1];
+        this.alternative_offset.y = [-2, 0];
+
         this.gun = gun;
 
         this.position = new THREE.Vector3();
         this.position.x = 4;
         this.position.y = -2;
         this.position.z = -4;
+
+        this.center = new THREE.Vector3();
+        this.center.x = 4;
+        this.center.y = -2;
+        this.center.z = -4;
+
+        this.alternative_center = new THREE.Vector3();
+        this.alternative_center.x = 0;
+        this.alternative_center.y = -1;
+        this.alternative_center.z = -3;
 
         this.rotation = new THREE.Vector3();
         this.rotation.x = 0;
@@ -63,8 +77,8 @@ class GunPhysics {
     }
 
     _applyVelocity() {
-        this.position.x = Math.min(Math.max(4 - this.gunVelocity.x, this.gunMaxOffset.x[0]), this.gunMaxOffset.x[1]);
-        this.position.y = Math.min(Math.max(-2 + this.gunVelocity.y, this.gunMaxOffset.y[0]), this.gunMaxOffset.y[1]);
+        this.position.x = Math.min(Math.max(this.center.x - this.gunVelocity.x, this.gunMaxOffset.x[0]), this.gunMaxOffset.x[1]);
+        this.position.y = Math.min(Math.max(this.center.y + this.gunVelocity.y, this.gunMaxOffset.y[0]), this.gunMaxOffset.y[1]);
 
         this.rotation.x += this.rotationVelocity.x * 0.115;
         this.rotation.z += this.rotationVelocity.z * 0.115;
@@ -78,5 +92,10 @@ class GunPhysics {
 
         this.gunVelocity.x -= this.gunVelocity.x * 0.08;
         this.gunVelocity.y -= this.gunVelocity.y * 0.08;
+    }
+
+    switchIronsight() {
+        this.center = [this.alternative_center, this.alternative_center = this.center][0];
+        this.gunMaxOffset = [this.alternative_offset, this.alternative_offset = this.gunMaxOffset][0];
     }
 }
