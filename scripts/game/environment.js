@@ -49,7 +49,7 @@ class Environment {
 
         player.controls.update(Date.now() - time);
 
-        player.handleHUDMovement(velocity.x, velocity.y, velocity.z);
+        player.gun.physics.handleHUDMovement(velocity.x, velocity.y, velocity.z);
 
         env.renderer.render(map.scene, env.camera);
         map.scene.simulate();
