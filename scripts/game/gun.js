@@ -13,7 +13,7 @@ class Gun {
         this.loadGun();
 
         this.craftBullet = () => {
-            var rectangle = new Physijs.SphereMesh(
+            var bullet = new Physijs.SphereMesh(
                 new THREE.SphereGeometry(
                     0.2,
                     16,
@@ -31,14 +31,14 @@ class Gun {
             );
     
             var pos = this.localToWorld(new THREE.Vector3());
-            rectangle.position.x = pos.x;
-            rectangle.position.y = pos.y+1;
-            rectangle.position.z = pos.z;
+            bullet.position.x = pos.x;
+            bullet.position.y = pos.y+1;
+            bullet.position.z = pos.z;
     
-            rectangle.castShadow = true;
-            rectangle.receiveShadow = true;
-    
-            return rectangle;
+            bullet.castShadow = false;
+            bullet.receiveShadow = false;
+
+            return bullet;
         }
 
         this.shoot = () => {
