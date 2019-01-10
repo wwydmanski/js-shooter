@@ -61,6 +61,9 @@ class DefaultMap extends Map {
             mesh.position.z = Math.floor(Math.random() * 20 - 10) * 20;
 
             material.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+            mesh.addEventListener('collision', function( other_object ) {  
+                this.material.color.setHex( 0xff0000 );
+            });
             objects.push(mesh);
         }
 
