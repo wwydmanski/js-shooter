@@ -2,7 +2,7 @@ class DefaultMap extends Map {
     constructor() {
         super();
 
-        new SmileyTarget(this.scene, 0,10,-15);
+        smiley = new SmileyTarget(this.scene, 0,10,-15);
         new SmileyTarget(this.scene, 0,10,-25);
     }
 
@@ -14,7 +14,8 @@ class DefaultMap extends Map {
         var light2 = new THREE.DirectionalLight(0xffffff, 0.75);
         light2.position.set(-1, - 0.5, -1);
 
-        return [light1, light2];
+        // return [light1, light2];
+        return [];
     }
 
     createFloor() {
@@ -38,7 +39,7 @@ class DefaultMap extends Map {
 
         }
 
-        var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
+        var material = new THREE.MeshPhongMaterial({ vertexColors: THREE.VertexColors });
 
         var mesh = new Physijs.BoxMesh(geometry, Physijs.createMaterial(material, 1, 0), 0);
         return mesh;

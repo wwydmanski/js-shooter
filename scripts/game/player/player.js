@@ -6,15 +6,16 @@ class Player {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
         this.controls = new THREE.PointerLockControls(this.camera);
 
-        this.gun = new Gun(this.camera, this.controls);
-
-        var geometry = new THREE.BoxGeometry(10, 10, 10);
-        var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors }));
-        var mesh = new Physijs.BoxMesh(geometry, material, 0.1);
         
+        var geometry = new THREE.BoxGeometry(10, 10, 10);
+        var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, opacity: 0 }));
+        material.transparent = true;
+        var mesh = new Physijs.BoxMesh(geometry, material, 0.1);
         this.camera.add(mesh);
         this.mesh = mesh;
-
+        this.mesh.position.set(0,0,-40);
+        
+        this.gun = new Gun(this.camera, this.mesh, this.controls);
         console.info("Player loaded");
     }
 }
