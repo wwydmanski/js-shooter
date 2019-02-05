@@ -5,7 +5,6 @@ class SmileyTarget extends Target{
             new THREE.MeshPhongMaterial( { color: color } ));
         
         console.info("SmileyTarget loading finished");
-        
         return mesh;
     }
 
@@ -51,5 +50,7 @@ class SmileyTarget extends Target{
         mesh.position.set(-40,4,-40);
         hitbox.position.set(x,y,z);
         scene.add(hitbox);
+
+        this.__proto__=hitbox;
     }
 }
