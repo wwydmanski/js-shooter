@@ -15,7 +15,7 @@ class Gun {
         this.craftBullet = () => {
             var bullet = new Physijs.SphereMesh(
                 new THREE.SphereGeometry(
-                    0.2,
+                    .2,
                     16,
                     16
                 ),
@@ -24,10 +24,10 @@ class Gun {
                         reflectivity: .8,
                         map: THREE.ImageUtils.loadTexture('plywood.jpg')
                     }),
-                    .9,
-                    0
+                    .3,
+                    .2
                 ),
-                1
+                0.1
             );
     
             var pos = this.localToWorld(new THREE.Vector3());
@@ -37,7 +37,10 @@ class Gun {
     
             bullet.castShadow = false;
             bullet.receiveShadow = false;
+            bullet.setCcdMotionThreshold(0.01);
 
+            // Set the radius of the embedded sphere such that it is smaller than the object
+            bullet.setCcdSweptSphereRadius(2);
             return bullet;
         }
 
@@ -45,9 +48,9 @@ class Gun {
             var bullet = this.craftBullet();
             map.addObject(bullet);
 
-            var imp_y = 700 * Math.sin((this.controls.getPitchObject().rotation.x + this.rotation.x));
-            var imp_x = -700 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
-            var imp_z = -700 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            var imp_y = 50 * Math.sin((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            var imp_x = -50 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            var imp_z = -50 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             bullet.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
 
             if(this.physics.ironsights)
@@ -68,7 +71,7 @@ class Gun {
                 this.toggleIronsights();
         }, true);
 
-        console.info("Gun loaded");
+        console.info("Loading gun finished");
     }
 
     loadGun() {

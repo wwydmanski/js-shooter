@@ -53,13 +53,15 @@ class GunPhysics {
         this._updateVelocity();
         this._applyVelocity();
 
-        this.gun.position.x = this.position.x;
-        this.gun.position.y = this.position.y;
-        this.gun.position.z = this.position.z;
+        if (this.gun.position != null) {
+            this.gun.position.x = this.position.x;
+            this.gun.position.y = this.position.y;
+            this.gun.position.z = this.position.z;
 
-        this.gun.rotation.x = this.rotation.x - this.playerMovementVelocity.z * 0.13;
-        this.gun.rotation.y = this.rotation.y;
-        this.gun.rotation.z = this.rotation.z + this.playerMovementVelocity.x * 0.13;
+            this.gun.rotation.x = this.rotation.x - this.playerMovementVelocity.z * 0.13;
+            this.gun.rotation.y = this.rotation.y;
+            this.gun.rotation.z = this.rotation.z + this.playerMovementVelocity.x * 0.13;
+        }
     }
 
     _applyVelocity() {
