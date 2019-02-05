@@ -70,7 +70,7 @@ THREE.PointerLockControls = function (camera) {
                 break;
         }
         
-        if(noclip && event.shiftKey==1)
+        if(debug && event.shiftKey==1)
             velocity.y -= 2;
     };
 
@@ -151,7 +151,7 @@ THREE.PointerLockControls = function (camera) {
         velocity.x += (- velocity.x) * 0.08 * delta;
         velocity.z += (- velocity.z) * 0.08 * delta;
 
-        if (noclip){
+        if (debug){
             canJump = true;
             if(velocity.y>0)
                 velocity.y -= 0.1 * delta;

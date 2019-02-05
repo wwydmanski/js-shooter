@@ -2,7 +2,7 @@ class Gun {
     constructor(camera, crosshair, controls) {
         this.camera = camera;
         this.controls = controls;
-        this.torchlight = new THREE.SpotLight( 0xffffff, 1, 80, Math.PI/4, 0.1);
+        this.torchlight = new THREE.SpotLight( 0xffffff, 1, 100, Math.PI/4, 0.1);
         this.torchlight.target = crosshair;
         this.torchlight.position.set(0,-1,0);
         this.torchlight.castShadow=true;
@@ -11,12 +11,14 @@ class Gun {
             map.scene.add(geometry);
             this.__proto__ = geometry;
             this.geometry = geometry;
+            this.geometry.target = crosshair;
             this.camera.add(this.geometry);
             this.add(this.torchlight);
 
-            
-            var helper = new THREE.CameraHelper( this.torchlight.shadow.camera );
-            scene.add( helper );
+            if(debug){
+                var helper = new THREE.CameraHelper( this.torchlight.shadow.camera );
+                map.scene.add( helper );
+            }
         };
 
         this.loadGun();
