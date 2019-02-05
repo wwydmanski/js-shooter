@@ -60,7 +60,7 @@
 </head>
 
 <body>
-    <script type="text/javascript" src="scripts/system/three.js"></script>
+    <script type="text/javascript" src="scripts/system/three.min.js"></script>
     <script type="text/javascript" src="scripts/system/PointerLockControls.js"></script>
     <script type="text/javascript" src="scripts/system/MTLLoader.js"></script>
     <script type="text/javascript" src="scripts/system/OBJLoader.js"></script>
@@ -95,7 +95,7 @@
         var time = Date.now();
 
         var map = new DefaultMap();
-        var player = new Player();
+        var player = new Player(map.scene);
 
         checkPointerLock(player.controls);
 
