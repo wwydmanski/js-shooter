@@ -8,14 +8,13 @@ class DefaultMap extends Map {
 
     createLights() {
         console.info("Creating lights...");
-        var light1 = new THREE.DirectionalLight(0xffffff, 1.5);
+        var light1 = new THREE.DirectionalLight(0xffffff, 0.1);
         light1.position.set(1, 1, 1);
 
-        var light2 = new THREE.DirectionalLight(0xffffff, 0.75);
+        var light2 = new THREE.DirectionalLight(0xffffff, 0.1);
         light2.position.set(-1, - 0.5, -1);
 
-        // return [light1, light2];
-        return [];
+        return [light1, light2];
     }
 
     createFloor() {
@@ -42,6 +41,7 @@ class DefaultMap extends Map {
         var material = new THREE.MeshPhongMaterial({ vertexColors: THREE.VertexColors });
 
         var mesh = new Physijs.BoxMesh(geometry, Physijs.createMaterial(material, 1, 0), 0);
+        mesh.receiveShadow=true;
         return mesh;
     }
 
@@ -72,6 +72,8 @@ class DefaultMap extends Map {
             mesh.addEventListener('collision', function (other_object) {
                 this.material.color.setHex(0xff0000);
             });
+            mesh.castShadow=true;
+            mesh.receiveShadow=true;
             objects.push(mesh);
         }
 

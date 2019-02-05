@@ -10,12 +10,12 @@ class Player {
         var geometry = new THREE.BoxGeometry(10, 10, 10);
         var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, opacity: 0 }));
         material.transparent = true;
-        var mesh = new Physijs.BoxMesh(geometry, material, 0.1);
-        this.camera.add(mesh);
-        this.mesh = mesh;
-        this.mesh.position.set(0,0,-40);
+        var crosshair = new Physijs.BoxMesh(geometry, material, 0.1);
+        this.camera.add(crosshair);
+        this.crosshair = crosshair;
+        this.crosshair.position.set(0,0,-40);
         
-        this.gun = new Gun(this.camera, this.mesh, this.controls);
+        this.gun = new Gun(this.camera, this.crosshair, this.controls);
         console.info("Player loaded");
     }
 }

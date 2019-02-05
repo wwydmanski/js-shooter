@@ -11,7 +11,8 @@ class Environment {
         this.ray.ray.direction.set(0, -1, 0);
         
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setClearColor(0xffffff);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.setClearColor(0x000000);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         
         window.onresize = this.onWindowResize;

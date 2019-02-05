@@ -5,8 +5,8 @@ class Target {
             Target.HITBOX_GEOMETRY = this.loadHitbox();
         }
         
-        Target.HITBOX_WIREFRAME = Physijs.createMaterial(new THREE.MeshBasicMaterial({ wireframe: true, opacity: 0.5 }), 1, 0.1);
-
+        Target.HITBOX_WIREFRAME = Physijs.createMaterial(new THREE.MeshBasicMaterial({ wireframe: true, opacity: 0.0 }), 1, 0.1);
+        Target.HITBOX_WIREFRAME.transparent = true;
         this.addObject(scene,x,y,z);
     }
     loadGeometry(){

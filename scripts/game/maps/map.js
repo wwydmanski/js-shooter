@@ -3,7 +3,7 @@ class Map {
         this.scene = new Physijs.Scene({ fixedTimeStep: 1 / 250 });;
         this.scene.setGravity(new THREE.Vector3(0, -50, 0));
 
-        this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
+        this.scene.fog = new THREE.Fog(0x000000, 0, 750);
 
         this.floor = this.createFloor();
         this.scene.add(this.floor);

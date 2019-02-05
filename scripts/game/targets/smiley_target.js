@@ -4,6 +4,8 @@ class SmileyTarget extends Target{
         var mesh = new THREE.Mesh( geometry, 
             new THREE.MeshPhongMaterial( { color: color } ));
         
+        mesh.castShadow=true;
+        mesh.receiveShadow=true;
         console.info("SmileyTarget loading finished");
         return mesh;
     }
