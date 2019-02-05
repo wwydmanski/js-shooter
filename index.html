@@ -75,7 +75,9 @@
     <script type="text/javascript" src="scripts/game/maps/default_map.js"></script>
     <script type="text/javascript" src="scripts/game/player/player.js"></script>
     <script type="text/javascript" src="scripts/game/player/gun_physics.js"></script>
+    <script type="text/javascript" src="scripts/game/player/torchlight.js"></script>
     <script type="text/javascript" src="scripts/game/player/gun.js"></script>
+
 
 
 
@@ -93,6 +95,8 @@
         Physijs.scripts.worker = 'physijs_worker.js';
         Physijs.scripts.ammo = 'ammo.js';
         var debug = true;
+
+        var MODE = 2;
 
         var camera;
         var time = Date.now();

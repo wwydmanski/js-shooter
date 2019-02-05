@@ -2,10 +2,8 @@ class Gun {
     constructor(camera, crosshair, controls) {
         this.camera = camera;
         this.controls = controls;
-        this.torchlight = new THREE.SpotLight( 0xffffff, 1, 100, Math.PI/4, 0.1);
-        this.torchlight.target = crosshair;
-        this.torchlight.position.set(0,-1,0);
-        this.torchlight.castShadow=true;
+        this.crosshair = crosshair;
+        this.torchlight = new Torchlight(crosshair);
 
         this.handler = (geometry) => {
             map.scene.add(geometry);
@@ -15,10 +13,11 @@ class Gun {
             this.camera.add(this.geometry);
             this.add(this.torchlight);
 
-            if(debug){
-                var helper = new THREE.CameraHelper( this.torchlight.shadow.camera );
-                map.scene.add( helper );
-            }
+            if(MODE==1)
+                this.add(crosshair)
+
+            this.torchlight.position.set(0,-0.5,0);
+            this.torchlight.target = this.target;
         };
 
         this.loadGun();
@@ -67,7 +66,7 @@ class Gun {
             if(this.physics.ironsights)
                 this.physics.applyRotationForce(1, 0, 0);
             else
-                this.physics.applyRotationForce(2, 0, 0);
+                this.physics.applyRotationForce(1.5, 0, 0);
         }
 
         this.toggleIronsights = () =>{
