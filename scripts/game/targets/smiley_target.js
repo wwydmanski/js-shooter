@@ -1,11 +1,28 @@
 class SmileyTarget extends Target{
-    _generateGeometry( shape, extrudeSettings, color, x, y, z, rx, ry, rz, s ) {
+    constructor(scene, x,y,z){
+        super(scene, x, y, z);
+        if(SmileyTarget.TARGET_MESH==null){
+            SmileyTarget.TARGET_MESH = this.loadGeometry();
+            SmileyTarget.HITBOX_GEOMETRY = this.loadHitbox();
+        }
+        this.addObject(scene,x,y,z);
+    }
+
+    _generateGeometry( shape, extrudeSettings, color) {
         var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
         var mesh = new THREE.Mesh( geometry, 
             new THREE.MeshPhongMaterial( { color: color } ));
         
         mesh.castShadow=true;
         mesh.receiveShadow=true;
+
+        for (var i = 0, l = geometry.vertices.length; i < l; i++) {
+            var vertex = geometry.vertices[i];
+            vertex.x += Math.random() * 2 - 1;
+            vertex.y += Math.random() * 2 - 1;
+            vertex.z += Math.random() * 2 - 1;
+        }
+
         console.info("SmileyTarget loading finished");
         return mesh;
     }
@@ -30,7 +47,8 @@ class SmileyTarget extends Target{
         smileyMouthPath.quadraticCurveTo( 5, 50, 20, 40 );
         smileyShape.holes.push( smileyMouthPath );
         var extrudeSettings = { depth: 8, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
-        return this._generateGeometry( smileyShape, extrudeSettings, 0xf000f0, 0, 20, -150, 0, 0, Math.PI, 1 );
+
+        return this._generateGeometry( smileyShape, extrudeSettings, 0xf000f0);
     }
 
     loadHitbox() {
@@ -38,10 +56,10 @@ class SmileyTarget extends Target{
     }
 
     addObject(scene, x, y, z){
-        var mesh = Target.TARGET_MESH.clone();
+        var mesh = SmileyTarget.TARGET_MESH.clone();
 
         var hitbox = new Physijs.CylinderMesh( 
-            Target.HITBOX_GEOMETRY, 
+            SmileyTarget.HITBOX_GEOMETRY, 
             Target.HITBOX_WIREFRAME
             ,1, 0.1);
 
