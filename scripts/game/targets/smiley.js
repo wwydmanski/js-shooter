@@ -1,11 +1,12 @@
-class SmileyTarget extends Target{
-    constructor(scene, x,y,z){
-        super(scene, x, y, z);
-        if(SmileyTarget.TARGET_MESH==null){
-            SmileyTarget.TARGET_MESH = this.loadGeometry();
-            SmileyTarget.HITBOX_GEOMETRY = this.loadHitbox();
+class Smiley extends Enemy{
+    constructor(){
+        super();
+        if(Smiley.TARGET_MESH==null){
+            Smiley.TARGET_MESH = this.loadGeometry();
+            Smiley.HITBOX_GEOMETRY = this.loadHitbox();
         }
-        this.addObject(scene,x,y,z);
+        this.mesh = Smiley.TARGET_MESH.clone();
+        this.HITBOX_GEOMETRY = Smiley.HITBOX_GEOMETRY;
     }
 
     _generateGeometry( shape, extrudeSettings, color) {
@@ -23,7 +24,7 @@ class SmileyTarget extends Target{
             vertex.z += Math.random() * 2 - 1;
         }
 
-        console.info("SmileyTarget loading finished");
+        console.info("Smiley loading finished");
         return mesh;
     }
 
@@ -53,24 +54,5 @@ class SmileyTarget extends Target{
 
     loadHitbox() {
         return new THREE.CylinderGeometry( 41, 41, 10, 32 );
-    }
-
-    addObject(scene, x, y, z){
-        var mesh = SmileyTarget.TARGET_MESH.clone();
-
-        var hitbox = new Physijs.CylinderMesh( 
-            SmileyTarget.HITBOX_GEOMETRY, 
-            Target.HITBOX_WIREFRAME
-            ,1, 0.1);
-
-        hitbox.rotation.set(Math.PI/2,0,0);
-        hitbox.scale.set(0.1, 0.1, 0.1);
-        hitbox.add(mesh);
-        mesh.rotation.set( Math.PI/2,0,0 );
-        mesh.position.set(-40,4,-40);
-        hitbox.position.set(x,y,z);
-        scene.add(hitbox);
-
-        this.__proto__=hitbox;
     }
 }

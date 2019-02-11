@@ -20,4 +20,8 @@ class Player {
         this.gun = new Gun(this.camera, this.crosshair, this.controls);
         console.info("Player loaded");
     }
+
+    getPosition() {
+        return this.camera.localToWorld( new THREE.Vector3() );
+    }
 }

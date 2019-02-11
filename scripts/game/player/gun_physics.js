@@ -1,5 +1,7 @@
 class GunPhysics {
     constructor(gun) {
+        this.SPEED_MULTIPLIER = 2;
+
         this.gun = gun;
         this.ironsights = false;
 
@@ -58,34 +60,34 @@ class GunPhysics {
             this.gun.position.y = this.position.y;
             this.gun.position.z = this.position.z;
 
-            this.gun.rotation.x = this.rotation.x - this.playerMovementVelocity.z * 0.13;
+            this.gun.rotation.x = this.rotation.x - this.playerMovementVelocity.z * 0.13 * this.SPEED_MULTIPLIER;
             this.gun.rotation.y = this.rotation.y;
-            this.gun.rotation.z = this.rotation.z + this.playerMovementVelocity.x * 0.13;
+            this.gun.rotation.z = this.rotation.z + this.playerMovementVelocity.x * 0.13 * this.SPEED_MULTIPLIER;
         }
     }
 
     _applyVelocity() {
-        this.position.x += this.gunVelocity.x * 0.2
-        this.position.y += this.gunVelocity.y * 0.2
-        this.position.z += this.gunVelocity.z * 0.2
+        this.position.x += this.gunVelocity.x * 0.2 * this.SPEED_MULTIPLIER;
+        this.position.y += this.gunVelocity.y * 0.2 * this.SPEED_MULTIPLIER;
+        this.position.z += this.gunVelocity.z * 0.2 * this.SPEED_MULTIPLIER;
 
-        this.rotation.x += this.rotationVelocity.x * 0.115;
-        this.rotation.z += this.rotationVelocity.z * 0.115;
+        this.rotation.x += this.rotationVelocity.x * 0.115 * this.SPEED_MULTIPLIER;
+        this.rotation.z += this.rotationVelocity.z * 0.115 * this.SPEED_MULTIPLIER;
 
         this.rotation.x = Math.max(Math.min(this.rotation.x, Math.PI / 2), 0);
     }
 
     _updateVelocity() {
-        this.applyForce((this.center.x - this.position.x) * 0.02,
-            (this.center.y - this.position.y) * 0.02,
-            (this.center.z - this.position.z) * 0.02);
+        this.applyForce((this.center.x - this.position.x) * 0.02 * this.SPEED_MULTIPLIER,
+            (this.center.y - this.position.y) * 0.02 * this.SPEED_MULTIPLIER,
+            (this.center.z - this.position.z) * 0.02 * this.SPEED_MULTIPLIER);
 
-        this.applyForce(-this.gunVelocity.x * 0.08,
-            -this.gunVelocity.y * 0.08,
-            -this.gunVelocity.z * 0.08);
+        this.applyForce(-this.gunVelocity.x * 0.08 * this.SPEED_MULTIPLIER,
+            -this.gunVelocity.y * 0.08 * this.SPEED_MULTIPLIER,
+            -this.gunVelocity.z * 0.08 * this.SPEED_MULTIPLIER);
 
-        this.rotationVelocity.x -= this.rotationVelocity.x * 0.08 + 0.02;
-        this.rotationVelocity.z -= this.rotationVelocity.z * 0.08;
+        this.rotationVelocity.x -= this.rotationVelocity.x * 0.08 * this.SPEED_MULTIPLIER + 0.02 * this.SPEED_MULTIPLIER;
+        this.rotationVelocity.z -= this.rotationVelocity.z * 0.08 * this.SPEED_MULTIPLIER;
     }
 
     toggleIronsights() {

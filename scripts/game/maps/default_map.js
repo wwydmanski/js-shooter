@@ -2,8 +2,8 @@ class DefaultMap extends Map {
     constructor() {
         super();
 
-        smiley = new SmileyTarget(this.scene, 0,10,-15);
-        new SmileyTarget(this.scene, 0,10,-25);
+        smiley = new Smiley().add(this.scene, 0,5.5,-15);
+        new Smiley().add(this.scene, 0,5.5,-25);
     }
 
     createLights() {
