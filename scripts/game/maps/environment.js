@@ -53,7 +53,7 @@ class Environment {
         // player.gun.physics.update();
 
         env.renderer.render(map.scene, env.camera);
-        smiley.move();
+        map.moveEnemies();
         map.scene.simulate();
         time = Date.now();
     }

@@ -61,12 +61,22 @@ class Gun {
             var imp_y = 50 * Math.sin((this.controls.getPitchObject().rotation.x + this.rotation.x));
             var imp_x = -50 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             var imp_z = -50 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
+            bullet.addEventListener('collision', function (other_object) {
+                try{
+                    other_object.dead = true;
+                    console.log(other_object);
+                }
+                catch(err){
+
+                }
+            });
+            
             bullet.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));
 
             if(this.physics.ironsights)
-                this.physics.applyRotationForce(1, 0, 0);
+                this.physics.applyRotationForce(0.8*this.physics.SPEED_MULTIPLIER/2, 0, 0);
             else
-                this.physics.applyRotationForce(1.5, 0, 0);
+                this.physics.applyRotationForce(1.5*this.physics.SPEED_MULTIPLIER/2, 0, 0);
         }
 
         this.toggleIronsights = () =>{

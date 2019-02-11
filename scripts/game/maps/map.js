@@ -15,6 +15,11 @@ class Map {
 
         this.objects = this.createObjects();
         this.objects.forEach(obj => this.scene.add(obj));
+
+        this.enemies = this.createEnemies();
+        this.moveEnemies = () => {
+            this.enemies.forEach(obj => obj.move());
+        }
         console.info("Map creating finished");
     }
 
@@ -32,5 +37,9 @@ class Map {
 
     addObject(obj){
         this.scene.add(obj);
+    }
+
+    createEnemies() {
+        throw new Error("Abstract method!");
     }
 }

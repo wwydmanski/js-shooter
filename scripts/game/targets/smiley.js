@@ -1,6 +1,6 @@
 class Smiley extends Enemy{
-    constructor(){
-        super();
+    constructor(speed){
+        super(speed);
         if(Smiley.TARGET_MESH==null){
             Smiley.TARGET_MESH = this.loadGeometry();
             Smiley.HITBOX_GEOMETRY = this.loadHitbox();

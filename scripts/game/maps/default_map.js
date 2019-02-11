@@ -1,9 +1,6 @@
 class DefaultMap extends Map {
     constructor() {
         super();
-
-        smiley = new Smiley().add(this.scene, 0,5.5,-15);
-        new Smiley().add(this.scene, 0,5.5,-25);
     }
 
     createLights() {
@@ -15,6 +12,13 @@ class DefaultMap extends Map {
         light2.position.set(-1, - 0.5, -1);
 
         return [light1, light2];
+    }
+
+    createEnemies() {
+        var smiley1 = new Smiley().add(this.scene, 0,5.5,-15);
+        var smiley2 = new Smiley(2).add(this.scene, 0,5.5,-25);
+
+        return [smiley1, smiley2];
     }
 
     createFloor() {
