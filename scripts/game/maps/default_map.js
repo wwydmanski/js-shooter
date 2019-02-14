@@ -25,7 +25,7 @@ class DefaultMap extends Map {
     {
         console.info("Creating barrier...");
 
-        var geometry = new THREE.BoxGeometry(420, 20, 20);
+        var geometry = new THREE.BoxGeometry(420, 100, 20);
         var objects = [];
 
         for (var i = 0, l = geometry.faces.length; i < l; i++)
@@ -48,7 +48,7 @@ class DefaultMap extends Map {
 
             mesh.receiveShadow = true;
             
-            mesh.position.y = 5;
+            mesh.position.y = 10;
 
             objects.push(mesh);
         }
