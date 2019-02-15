@@ -62,13 +62,7 @@ class Gun {
             var imp_x = -50 * Math.sin(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             var imp_z = -50 * Math.cos(this.controls.getObject().rotation.y)*Math.cos((this.controls.getPitchObject().rotation.x + this.rotation.x));
             bullet.addEventListener('collision', function (other_object) {
-                try{
-                    other_object.dead = true;
-                    console.log(other_object);
-                }
-                catch(err){
-
-                }
+                other_object.dead = true;
             });
             
             bullet.applyCentralImpulse(new THREE.Vector3(imp_x, imp_y, imp_z));

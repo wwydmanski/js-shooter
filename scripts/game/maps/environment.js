@@ -50,10 +50,11 @@ class Environment {
 
         player.controls.update(Date.now() - time);
         player.gun.physics.handleHUDMovement(velocity.x, velocity.y, velocity.z);
-        // player.gun.physics.update();
 
         env.renderer.render(map.scene, env.camera);
-        map.moveEnemies();
+        // map.moveEnemies();
+
+
         map.scene.simulate();
         time = Date.now();
     }

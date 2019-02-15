@@ -11,18 +11,21 @@ class Smiley extends Enemy{
 
     _generateGeometry( shape, extrudeSettings, color) {
         var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+
         var mesh = new THREE.Mesh( geometry, 
             new THREE.MeshPhongMaterial( { color: color } ));
-        
+            
+        // var modifier = new THREE.SimplifyModifier();
+        // mesh.geometry = modifier.modify(mesh.geometry, 5);
         mesh.castShadow=true;
         mesh.receiveShadow=true;
 
-        for (var i = 0, l = geometry.vertices.length; i < l; i++) {
-            var vertex = geometry.vertices[i];
-            vertex.x += Math.random() * 2 - 1;
-            vertex.y += Math.random() * 2 - 1;
-            vertex.z += Math.random() * 2 - 1;
-        }
+        // for (var i = 0, l = geometry.vertices.length; i < l; i++) {
+        //     var vertex = geometry.vertices[i];
+        //     vertex.x += Math.random() * 2 - 1;
+        //     // vertex.y += Math.random() * 2 - 1;
+        //     // vertex.z += Math.random() * 2 - 1;
+        // }
 
         console.info("Smiley loading finished");
         return mesh;
@@ -47,7 +50,7 @@ class Smiley extends Enemy{
         smileyMouthPath.quadraticCurveTo( 40, 80, 20, 60 );
         smileyMouthPath.quadraticCurveTo( 5, 50, 20, 40 );
         smileyShape.holes.push( smileyMouthPath );
-        var extrudeSettings = { depth: 8, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
+        var extrudeSettings = { depth: 8, bevelEnabled: true, bevelSegments: 2, steps: 4, bevelSize: 1, bevelThickness: 1 };
 
         return this._generateGeometry( smileyShape, extrudeSettings, 0xf000f0);
     }

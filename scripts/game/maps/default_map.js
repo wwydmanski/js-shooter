@@ -5,10 +5,10 @@ class DefaultMap extends Map {
 
     createLights() {
         console.info("Creating lights...");
-        var light1 = new THREE.DirectionalLight(0xffffff, 0.1);
+        var light1 = new THREE.DirectionalLight(0xffffff, 0.05);
         light1.position.set(1, 1, 1);
 
-        var light2 = new THREE.DirectionalLight(0xffffff, 0.1);
+        var light2 = new THREE.DirectionalLight(0xffffff, 0.05);
         light2.position.set(-1, - 0.5, -1);
 
         return [light1, light2];
