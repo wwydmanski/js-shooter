@@ -57,7 +57,7 @@ class Gun {
         this.craftFlare = () => {
             var bullet = new Physijs.SphereMesh(
                 new THREE.SphereGeometry(
-                    .2,
+                    .5,
                     16,
                     16
                 ),
@@ -76,7 +76,7 @@ class Gun {
             bullet.position.y = pos.y+1;
             bullet.position.z = pos.z;
     
-            var light = new THREE.PointLight( 0xff0000, 1, 150, 2);
+            var light = new THREE.PointLight( 0xff0000, 1, 150, 1);
             bullet.add( light );
 
             bullet.castShadow = false;

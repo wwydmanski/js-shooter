@@ -72,7 +72,7 @@ class DefaultMap extends Map {
         for (var i = 0, l = geometry.vertices.length; i < l; i++) {
             var vertex = geometry.vertices[i];
             vertex.x += Math.random() * 20 - 10;
-            vertex.y += Math.random() * 2;
+            // vertex.y += Math.random() * 2;
             vertex.z += Math.random() * 20 - 10;
         }
 

@@ -18,6 +18,7 @@ class Player {
         this.crosshair.position.set(0,0,-40);
         
         this.gun = new Gun(this.camera, this.crosshair, this.controls);
+
         console.info("Player loaded");
     }
 

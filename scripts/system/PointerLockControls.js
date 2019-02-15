@@ -23,6 +23,8 @@ THREE.PointerLockControls = function (camera) {
     var isOnObject = false;
     var canJump = false;
 
+    var isFlashlightOn = true;
+
     velocity = new THREE.Vector3();
 
     var PI_2 = Math.PI / 2;
@@ -68,6 +70,10 @@ THREE.PointerLockControls = function (camera) {
                 if (canJump === true) velocity.y += 2;
                 canJump = false;
                 break;
+
+            case 70:
+                isFlashlightOn = !isFlashlightOn;
+                break;
         }
         
         if(debug && event.shiftKey==1)
@@ -97,7 +103,6 @@ THREE.PointerLockControls = function (camera) {
             case 68: // d
                 moveRight = false;
                 break;
-
         }
 
     };
@@ -123,6 +128,11 @@ THREE.PointerLockControls = function (camera) {
 
     };
 
+    this.isFlashlightOn = function (boolean) {
+        
+        isFlashlightOn = boolean;
+    };
+
     this.getDirection = function () {
 
         // assumes the camera itself is not rotated
@@ -141,6 +151,11 @@ THREE.PointerLockControls = function (camera) {
         }
 
     }();
+
+    this.manageFlashlight = function (flashlight) {
+
+        flashlight.visible = isFlashlightOn;
+    }
 
     this.update = function (delta) {
 
