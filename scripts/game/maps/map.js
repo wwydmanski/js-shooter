@@ -5,6 +5,9 @@ class Map {
 
         this.scene.fog = new THREE.Fog(0x000000, 0, 750);
 
+        this.barrier = this.createBarrier();
+        this.barrier.forEach(obj => this.scene.add(obj));
+
         this.floor = this.createFloor();
         this.scene.add(this.floor);
 
@@ -24,6 +27,11 @@ class Map {
     }
 
     createLights() {
+        throw new Error("Abstract method!");
+    }
+
+    createBarrier()
+    {
         throw new Error("Abstract method!");
     }
 

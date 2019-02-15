@@ -21,6 +21,49 @@ class DefaultMap extends Map {
         return [smiley1, smiley2];
     }
 
+    createBarrier()
+    {
+        console.info("Creating barrier...");
+
+        var geometry = new THREE.BoxGeometry(420, 100, 20);
+        var objects = [];
+
+        for (var i = 0, l = geometry.faces.length; i < l; i++)
+        {
+
+            var face = geometry.faces[i];
+            face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+            face.vertexColors[1] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+            face.vertexColors[2] = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+        }
+
+        for (var i = 0; i < 4; i++)
+        {
+
+            var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors }));
+
+            var mesh = new Physijs.BoxMesh(geometry, material, 0);
+
+            material.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+
+            mesh.receiveShadow = true;
+            
+            mesh.position.y = 10;
+
+            objects.push(mesh);
+        }
+
+        objects[0].position.z =  220;
+        objects[1].position.z = -220;
+        objects[2].rotation.y = Math.PI / 2;
+        objects[3].rotation.y = Math.PI / 2;
+        objects[2].position.x =  220;
+        objects[3].position.x = -220;
+
+
+        return objects;
+    }
+
     createFloor() {
         console.info("Creating floor...");
         var geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
