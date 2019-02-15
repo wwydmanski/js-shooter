@@ -63,7 +63,8 @@ class Gun {
                 ),
                 Physijs.createMaterial(
                     new THREE.MeshLambertMaterial({
-                        color: 0xFF0000
+                        color: 0xFF0000,
+                        emissive: 0xFF0000
                     }),
                     .3,
                     .2
