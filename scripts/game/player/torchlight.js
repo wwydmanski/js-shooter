@@ -1,6 +1,6 @@
 class Torchlight extends THREE.SpotLight{
     constructor(crosshair){
-        super(0xffffff, 1, 100, Math.PI/4, 0.1);
+        super(0xffffff, 1, 100, Math.PI/5, 0.3);
         this.target = crosshair;
         this.position.set(0,-1,0);
         this.castShadow=true;
