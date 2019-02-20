@@ -15,10 +15,16 @@ class DefaultMap extends Map {
     }
 
     createEnemies() {
-        var smiley1 = new Smiley().add(this.scene, 0,5.5,-15);
-        var smiley2 = new Smiley(2).add(this.scene, 0,5.5,-25);
+        var enemies = [];
+        enemies.push(new Smiley().add(this.scene, 0,5.5,-15));
+        // var smiley1 = new Smiley().add(this.scene, 0,5.5,-15);
+        // var smiley2 = new Smiley(2).add(this.scene, 0,5.5,-25);
 
-        return [smiley1, smiley2];
+        for(var i=0; i<15; i++)
+            enemies.push(new Smiley().add(this.scene, Math.random()*210*2-210,5.5,Math.random()*210*2-210));
+
+
+        return enemies;
     }
 
     createBarrier()
@@ -72,7 +78,7 @@ class DefaultMap extends Map {
         for (var i = 0, l = geometry.vertices.length; i < l; i++) {
             var vertex = geometry.vertices[i];
             vertex.x += Math.random() * 20 - 10;
-            vertex.y += Math.random() * 2;
+            // vertex.y += Math.random() * 2;
             vertex.z += Math.random() * 20 - 10;
         }
 

@@ -5,15 +5,21 @@
 THREE.PointerLockControls = function (camera) {
 
     var scope = this;
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var material = Physijs.createMaterial(new THREE.MeshPhongMaterial({ specular: 0xff0000, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, opacity: 0 }));
 
     camera.rotation.set(0, 0, 0);
 
     var pitchObject = new THREE.Object3D();
     pitchObject.add(camera);
 
-    var yawObject = new THREE.Object3D();
+    var yawObject = new Physijs.BoxMesh(geometry, material, 1);
     yawObject.position.y = 10;
     yawObject.add(pitchObject);
+
+    yawObject.addEventListener('collision', function (other_object) {
+        console.log(other_object);
+    });
 
     var moveForward = false;
     var moveBackward = false;
@@ -22,8 +28,6 @@ THREE.PointerLockControls = function (camera) {
 
     var isOnObject = false;
     var canJump = false;
-
-    var isFlashlightOn = true;
 
     velocity = new THREE.Vector3();
 
@@ -36,10 +40,13 @@ THREE.PointerLockControls = function (camera) {
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-        yawObject.rotation.y -= movementX * 0.002;
+        // yawObject.rotation.y -= movementX * 0.002;
+        yawObject.rotation.set(0, yawObject.rotation.y - movementX * 0.002, 0);
         pitchObject.rotation.x -= movementY * 0.002;
 
         pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
+        yawObject.__dirtyRotation = true;
+        yawObject.__dirtyPosition=true;
         player.gun.physics.handleMouseRotation(movementX, movementY);
     };
 
@@ -70,10 +77,6 @@ THREE.PointerLockControls = function (camera) {
                 if (canJump === true) velocity.y += 2;
                 canJump = false;
                 break;
-
-            case 70:
-                isFlashlightOn = !isFlashlightOn;
-                break;
         }
         
         if(debug && event.shiftKey==1)
@@ -103,6 +106,7 @@ THREE.PointerLockControls = function (camera) {
             case 68: // d
                 moveRight = false;
                 break;
+
         }
 
     };
@@ -128,11 +132,6 @@ THREE.PointerLockControls = function (camera) {
 
     };
 
-    this.isFlashlightOn = function (boolean) {
-        
-        isFlashlightOn = boolean;
-    };
-
     this.getDirection = function () {
 
         // assumes the camera itself is not rotated
@@ -151,11 +150,6 @@ THREE.PointerLockControls = function (camera) {
         }
 
     }();
-
-    this.manageFlashlight = function (flashlight) {
-
-        flashlight.visible = isFlashlightOn;
-    }
 
     this.update = function (delta) {
 
@@ -184,19 +178,23 @@ THREE.PointerLockControls = function (camera) {
             velocity.y = Math.max(0, velocity.y);
         }
 
-        yawObject.translateX(velocity.x);
-        yawObject.translateY(velocity.y);
-        yawObject.translateZ(velocity.z);
+        // yawObject.translateX(velocity.x);
+        // yawObject.translateY(velocity.y);
+        // yawObject.translateZ(velocity.z);
+        var pos = yawObject.localToWorld( new THREE.Vector3() );
+        yawObject.position.set(pos.x + velocity.x, pos.y, pos.z + velocity.z);
+        yawObject.__dirtyPosition=true;
+        yawObject.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+        yawObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+
 
         if (yawObject.position.y < 10) {
 
             velocity.y = 0;
-            yawObject.position.y = 10;
+            yawObject.position.set(pos.x, 10, pos.z);
 
             canJump = true;
-
         }
-
     };
 
 };

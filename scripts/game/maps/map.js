@@ -11,10 +11,10 @@ class Map {
         this.floor = this.createFloor();
         this.scene.add(this.floor);
 
-        this.lights = this.createLights();
-        this.lights.forEach(light => {
-            this.scene.add(light);
-        });
+        // this.lights = this.createLights();
+        // this.lights.forEach(light => {
+        //     this.scene.add(light);
+        // });
 
         this.objects = this.createObjects();
         this.objects.forEach(obj => this.scene.add(obj));
