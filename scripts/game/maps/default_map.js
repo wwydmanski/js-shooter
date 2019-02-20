@@ -21,7 +21,7 @@ class DefaultMap extends Map {
         // var smiley2 = new Smiley(2).add(this.scene, 0,5.5,-25);
 
         for(var i=0; i<15; i++)
-            enemies.push(new Smiley().add(this.scene, Math.random()*210*2-210,5.5,Math.random()*210*2-210));
+            enemies.push(new Smiley(Math.random()*3).add(this.scene, Math.random()*210*2-210,5.5,Math.random()*210*2-210));
 
 
         return enemies;
